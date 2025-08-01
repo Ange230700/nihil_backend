@@ -27,7 +27,7 @@ jobs:
           --health-timeout=5s
           --health-retries=5
     env:
-      USER_DATABASE_URL: mysql://${{ secrets.MYSQL_USER }}:${{ secrets.MYSQL_PASSWORD }}@127.0.0.1:3307/user_db
+      USER_DATABASE_URL: mysql://${{ secrets.MYSQL_USER }}:${{ secrets.MYSQL_PASSWORD }}@${{ secrets.MYSQL_HOST }}:${{ secrets.MYSQL_PORT }}/${{ secrets.MYSQL_DATABASE }}
       NODE_ENV: test
       PORT: 3000
 

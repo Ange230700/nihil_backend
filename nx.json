@@ -1,0 +1,9 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "nxCloudId": "688903f9d6cf67681d76961e",
+  "npmScope": "@nihil_backend/root",
+  "workspaceLayout": {
+    "libsDir": ".",
+    "appsDir": "."
+  }
+}

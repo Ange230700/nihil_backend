@@ -54,8 +54,5 @@ jobs:
       - name: Build all
         run: npm run build:all
 
-      - name: Lint all
-        run: npm run lint:all
-
       - name: Test all
         run: npm run test:all

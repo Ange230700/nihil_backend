@@ -2,7 +2,8 @@
   "name": "@nihil_backend/root",
   "packageManager": "npm@11.4.2",
   "workspaces": [
-    "user"
+    "user",
+    "post"
   ],
   "version": "1.0.0",
   "description": "",
@@ -16,7 +17,7 @@
     "copy-envs": "for d in user; do cp -n $d/.env.sample $d/.env || true; done",
     "commit": "git-cz",
     "commitlint": "commitlint --edit",
-    "postinstall": "npx tsc --version && rm -rf user/dist user/tsconfig.tsbuildinfo && npm run build:all"
+    "postinstall": "rm -rf user/dist user/tsconfig.tsbuildinfo && npm i --workspace=user nihildbuser@latest && npm i --workspace=post nihildbpost@latest && npm run build:all"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",

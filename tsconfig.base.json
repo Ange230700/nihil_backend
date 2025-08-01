@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@nihil_backend/root/*": ["./*"],
-      "@nihil_backend/user/*": ["./user/*"]
+      "@nihil_backend/user/*": ["./user/*"],
+      "@nihil_backend/post/*": ["./post/*"]
     }
   }
 }

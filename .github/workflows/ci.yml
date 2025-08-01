@@ -51,10 +51,6 @@ jobs:
       - name: Install deps
         run: npm ci
 
-      - name: Prisma Migrate (User)
-        run: npx prisma migrate deploy
-        working-directory: ./user
-
       - name: Build all
         run: npm run build:all
 

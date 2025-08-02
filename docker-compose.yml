@@ -7,7 +7,7 @@ services:
     container_name: user-db
     restart: always
     environment:
-      MYSQL_DATABASE: ${MYSQL_DATABASE:-user_db}
+      MYSQL_DATABASE: ${USER_DATABASE:-user_db}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-changeme}
       MYSQL_USER: ${MYSQL_USER:-nihil}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD:-changeme}
@@ -15,6 +15,20 @@ services:
       - "3307:3306"
     volumes:
       - user-db-data:/var/lib/mysql
+
+  post-db:
+    image: mysql:8.3
+    container_name: post-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${POST_DATABASE:-post_db}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-changeme}
+      MYSQL_USER: ${MYSQL_USER:-nihil}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-changeme}
+    ports:
+      - "3308:3306"
+    volumes:
+      - post-db-data:/var/lib/mysql
 
   user-service:
     build:
@@ -26,12 +40,30 @@ services:
     environment:
       NODE_ENV: production
       PORT: 3000
-      USER_DATABASE_URL: mysql://${MYSQL_USER:-nihil}:${MYSQL_PASSWORD:-changeme}@user-db:3306/${MYSQL_DATABASE:-user_db}
+      USER_DATABASE_URL: mysql://${MYSQL_USER:-nihil}:${MYSQL_PASSWORD:-changeme}@user-db:3306/${USER_DATABASE:-user_db}
     ports:
       - "3001:3000"
     volumes:
       - ./user:/app
     command: ["npm", "start"]
 
+  post-service:
+    build:
+      context: ./post
+      dockerfile: Dockerfile
+    container_name: post-service
+    depends_on:
+      - post-db
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      POST_DATABASE_URL: mysql://${MYSQL_USER:-nihil}:${MYSQL_PASSWORD:-changeme}@post-db:3306/${POST_DATABASE:-post_db}
+    ports:
+      - "3002:3000"
+    volumes:
+      - ./post:/app
+    command: ["npm", "start"]
+
 volumes:
   user-db-data:
+  post-db-data:

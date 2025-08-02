@@ -1,5 +1,13 @@
 # .prettierignore
 
-# Ignore artifacts:
-build
-coverage
+node_modules
+.git
+.vscode
+package-lock.json
+dist
+.eslintcache
+.nx
+.nx/cache
+.nx/workspace-data
+user/dist
+post/dist

@@ -10,14 +10,14 @@
   "main": "index.js",
   "scripts": {
     "clean:all": "nx run-many --target=clean --all && rm -rf node_modules package-lock.json .eslintcache .nx/cache .nx/workspace-data",
-    "build:all": "nx run @nihil_backend/user:build",
+    "build:all": "nx run-many --target=build --all",
     "lint:all": "eslint --cache --fix && nx run-many --target=lint --all",
     "test:all": "nx run-many --target=test --all",
     "prepare": "husky",
     "copy-envs": "for d in user; do cp -n $d/.env.sample $d/.env || true; done",
     "commit": "git-cz",
     "commitlint": "commitlint --edit",
-    "postinstall": "rm -rf user/dist user/tsconfig.tsbuildinfo && npm i --workspace=user nihildbuser@latest && npm i --workspace=post nihildbpost@latest && npm run build:all"
+    "postinstall": "npm i --workspace=user nihildbuser@latest && npm i --workspace=post nihildbpost@latest && npm run build:all"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
@@ -35,7 +35,7 @@
     "husky": "^9.1.7",
     "jest": "^30.0.2",
     "lint-staged": "^16.1.0",
-    "nx": "21.3.10",
+    "nx": "^21.3.10",
     "prettier": "^3.5.3",
     "tsx": "^4.19.4",
     "tsconfig-paths": "^4.2.0",

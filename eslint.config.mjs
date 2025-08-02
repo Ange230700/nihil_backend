@@ -14,7 +14,12 @@ export default defineConfig([
     ".vscode",
     "package-lock.json",
     "dist",
+    ".eslintcache",
+    ".nx",
+    ".nx/cache",
+    ".nx/workspace-data",
     "user/dist",
+    "post/dist",
   ]),
   {
     files: ["**/*.{js,mjs,cjs,ts,mts,cts}"],

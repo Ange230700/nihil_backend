@@ -1,6 +1,5 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "nxCloudId": "688da28f2adbca537e78dd10",
   "npmScope": "@nihil_backend/root",
   "workspaceLayout": {
     "libsDir": ".",

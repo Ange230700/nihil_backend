@@ -1,12 +1,12 @@
-// user\src\api\index.ts
+// post\src\api\config.ts
 
 import express from "express";
 import type { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
-import router from "@nihil_backend/user/src/api/router";
-import { sendError } from "@nihil_backend/user/src/api/helpers/sendResponse";
+import router from "@nihil_backend/post/api/router";
+import { sendError } from "@nihil_backend/post/api/helpers/sendResponse";
 
 const app = express();
 
@@ -33,11 +33,6 @@ app.use(cookieParser());
 
 app.use("/api", router);
 
-/* ************************************************************************* */
-
-// Middleware for Error Logging (Uncomment to enable)
-// Important: Error-handling middleware should be defined last, after other app.use() and routes calls.
-
 const logErrors = (
   err: Error,
   req: Request,
@@ -49,10 +44,7 @@ const logErrors = (
   sendError(res, err.message || "Internal Server Error", 500, err);
 };
 
-// Mount the logErrors middleware globally
 app.use(logErrors);
-
-/* ************************************************************************* */
 
 if (process.env.NODE_ENV !== "test") {
   const PORT = process.env.PORT ?? 3000;

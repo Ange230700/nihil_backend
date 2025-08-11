@@ -1,4 +1,3 @@
 npx validate-branch-name
 npx lint-staged
-npx nx run-many --target=test --all
-npx nx run-many --target=lint --all
+npm run -s typecheck

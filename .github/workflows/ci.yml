@@ -12,7 +12,7 @@ jobs:
   build-test-lint:
     runs-on: ubuntu-latest
     services:
-      mysql:
+      mysql-user:
         image: mysql:8.3
         env:
           MYSQL_DATABASE: user_db
@@ -20,30 +20,45 @@ jobs:
           MYSQL_USER: ${{ secrets.MYSQL_USER }}
           MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
         ports:
-          - 3307:3306
+          - 3320:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+      mysql-post:
+        image: mysql:8.3
+        env:
+          MYSQL_DATABASE: user_db
+          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+          MYSQL_USER: ${{ secrets.MYSQL_USER }}
+          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+        ports:
+          - 3321:3306
         options: >-
           --health-cmd="mysqladmin ping --silent"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
     env:
-      USER_DATABASE_URL: mysql://${{ secrets.MYSQL_USER }}:${{ secrets.MYSQL_PASSWORD }}@${{ secrets.MYSQL_HOST }}:${{ secrets.MYSQL_PORT }}/${{ secrets.USER_DATABASE }}
-      POST_DATABASE_URL: mysql://${{ secrets.MYSQL_USER }}:${{ secrets.MYSQL_PASSWORD }}@${{ secrets.MYSQL_HOST }}:${{ secrets.MYSQL_PORT }}/${{ secrets.POST_DATABASE }}
+      USER_DATABASE_URL: mysql://root:${{ secrets.MYSQL_ROOT_PASSWORD }}@127.0.0.1:3320/user_db
+      POST_DATABASE_URL: mysql://root:${{ secrets.MYSQL_ROOT_PASSWORD }}@127.0.0.1:3321/post_db
       NODE_ENV: test
       PORT: 3000
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use Node 20
+      - name: Use Node 24
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
 
       - name: Wait for MySQL
         run: |
           for i in {1..30}; do
-            nc -z 127.0.0.1 3307 && echo "MySQL ready" && exit 0
+            nc -z 127.0.0.1 3320 && echo "MySQL ready" && exit 0
             echo "Waiting for MySQL..."
             sleep 2
           done

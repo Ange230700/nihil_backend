@@ -1,7 +1,7 @@
 // jest.setup.ts
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import dotenv from "dotenv";
 
-(async () => {
-  const path = await import("path");
-  const dotenv = await import("dotenv");
-  dotenv.config({ path: path.resolve(__dirname, ".env") });
-})();
+const __dirname = dirname(fileURLToPath(import.meta.url));
+dotenv.config({ path: `${__dirname}/.env` });

@@ -1,17 +1,17 @@
-// test-utils/ephemeral-db.ts (ESM)
+// test-utils\ephemeral-db.mjs
 import { createConnection } from "mysql2/promise";
 import { writeFile, readFile } from "fs/promises";
 import { randomBytes } from "crypto";
 import { execa } from "execa";
 
-function withNewDbName(url: string, newDb: string) {
+function withNewDbName(url, newDb) {
   const u = new URL(url);
   // pathname starts with '/', keep same host/user/pass/port
   u.pathname = `/${newDb}`;
   return u.toString();
 }
 
-function parseUrl(url: string) {
+function parseUrl(url) {
   const u = new URL(url);
   return {
     host: u.hostname || "127.0.0.1",
@@ -27,11 +27,6 @@ export async function createEphemeralDb({
   prismaSchemaPath, // e.g. require.resolve('nihildbuser/prisma/schema.prisma')
   runtimeUrlEnvKey, // USER_DATABASE_URL or POST_DATABASE_URL
   metaFile, // path to write meta JSON for teardown
-}: {
-  baseUrlEnvKey: string;
-  prismaSchemaPath: string;
-  runtimeUrlEnvKey: string;
-  metaFile: string;
 }) {
   const baseUrl =
     process.env[baseUrlEnvKey] || "mysql://root:changeme@127.0.0.1:3307/app_db"; // sensible default for local
@@ -71,7 +66,7 @@ export async function createEphemeralDb({
   );
 }
 
-export async function dropEphemeralDb(metaFile: string) {
+export async function dropEphemeralDb(metaFile) {
   const raw = await readFile(metaFile, "utf8");
   const { host, port, user, password, db } = JSON.parse(raw);
   const conn = await createConnection({ host, port, user, password });

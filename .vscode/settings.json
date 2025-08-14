@@ -18,6 +18,7 @@
     "nihildbpost",
     "nihildbuser",
     "openapi",
+    "prepush",
     "prisma",
     "profileuser",
     "testuser",

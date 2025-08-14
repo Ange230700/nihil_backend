@@ -20,7 +20,7 @@
     "typecheck": "tsc -b --noEmit --pretty false",
     "typecheck:user": "tsc -p user/tsconfig.json --noEmit --pretty false",
     "typecheck:post": "tsc -p post/tsconfig.json --noEmit --pretty false",
-    "prepush": "nx affected -t lint,test --base=origin/main --head=HEAD --parallel"
+    "prepush": "npm run test:all"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
@@ -37,7 +37,6 @@
     "execa": "^9.6.0",
     "globals": "^16.2.0",
     "husky": "^9.1.7",
-    "jest": "^30.0.2",
     "lint-staged": "^16.1.0",
     "mysql2": "^3.14.3",
     "nx": "^21.3.10",

@@ -15,7 +15,7 @@ function parseUrl(url) {
   const u = new URL(url);
   return {
     host: u.hostname || "127.0.0.1",
-    port: Number(u.port || 3306),
+    port: u.port ? parseInt(u.port, 10) : 3306,
     user: decodeURIComponent(u.username || "root"),
     password: decodeURIComponent(u.password || ""),
     db: u.pathname.replace(/^\//, ""),
@@ -29,18 +29,25 @@ export async function createEphemeralDb({
   metaFile, // path to write meta JSON for teardown
 }) {
   const baseUrl =
-    process.env[baseUrlEnvKey] || "mysql://root:changeme@127.0.0.1:3307/app_db"; // sensible default for local
+    process.env[baseUrlEnvKey] || "mysql://root:root@127.0.0.1:3306/app_db"; // sensible default for local
+  console.log(`[ephemeral-db] Using ${baseUrlEnvKey}=${baseUrl}`);
 
   const { host, port, user, password, db } = parseUrl(baseUrl);
   const suffix = randomBytes(4).toString("hex");
   const newDb = `${db}_test_${suffix}`;
-  const conn = await createConnection({
-    host,
-    port,
-    user,
-    password,
-    multipleStatements: true,
-  });
+  let conn;
+  try {
+    conn = await createConnection({
+      host,
+      port,
+      user,
+      password,
+      multipleStatements: true,
+    });
+  } catch (err) {
+    const hint = `Failed to connect to MySQL at ${host}:${port} as ${user}.`;
+    throw new Error(`${hint}\nOriginal error: ${err?.code || err?.message}`);
+  }
   await conn.query(`CREATE DATABASE IF NOT EXISTS \`${newDb}\`;`);
   await conn.end();
 

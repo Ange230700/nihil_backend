@@ -20,6 +20,8 @@ export default defineConfig([
     ".nx/workspace-data",
     "user/dist",
     "post/dist",
+    "coverage",
+    ".tmp",
   ]),
   {
     files: ["**/*.{js,mjs,cjs,ts,mts,cts}"],

@@ -3,24 +3,26 @@
 services:
   user-service:
     build:
-      context: ./
-      dockerfile: user/Dockerfile
+      context: ./user
+      dockerfile: Dockerfile
     container_name: user-service
     environment:
       NODE_ENV: production
       PORT: 3000
-      USER_DATABASE_URL: mysql://root:root@127.0.0.1:3309/nihil_user_dev?connection_limit=5
+      USER_DATABASE_URL: mysql://root:root@host.docker.internal:3309/nihil_user_dev?connection_limit=5
+      FRONT_API_BASE_URL: http://localhost:5173
     ports:
       - "3001:3000"
 
   post-service:
     build:
-      context: ./
-      dockerfile: post/Dockerfile
+      context: ./post
+      dockerfile: Dockerfile
     container_name: post-service
     environment:
       NODE_ENV: production
       PORT: 3000
-      POST_DATABASE_URL: mysql://root:root@127.0.0.1:3310/nihil_post_dev?connection_limit=5
+      POST_DATABASE_URL: mysql://root:root@host.docker.internal:3310/nihil_post_dev?connection_limit=5
+      FRONT_API_BASE_URL: http://localhost:5173
     ports:
       - "3002:3000"

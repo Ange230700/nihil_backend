@@ -30,7 +30,7 @@ jobs:
       mysql-post:
         image: mysql:8.3
         env:
-          MYSQL_DATABASE: user_db
+          MYSQL_DATABASE: post_db
           MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
           MYSQL_USER: ${{ secrets.MYSQL_USER }}
           MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}

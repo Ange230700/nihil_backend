@@ -12,7 +12,7 @@
     "clean:all": "nx run-many --target=clean --all && rm -rf node_modules package-lock.json .eslintcache .nx/cache .nx/workspace-data",
     "build:all": "nx run-many --target=build --all",
     "lint:all": "eslint --cache --fix && nx run-many --target=lint --all",
-    "test:all": "nx run-many --target=test --all",
+    "test:all": "nx run-many --target=test --all --parallel=1",
     "test:ci:all": "nx run-many --target=test:ci --all --parallel=1 --ci",
     "prepare": "husky",
     "copy-envs": "for d in user post; do cp -n $d/.env.sample $d/.env || true; done",

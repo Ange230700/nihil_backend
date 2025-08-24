@@ -13,7 +13,7 @@
     "build:all": "nx run-many --target=build --all",
     "lint:all": "eslint --cache --fix && nx run-many --target=lint --all",
     "test:all": "nx run-many --target=test --all --parallel=1",
-    "test:ci:all": "nx run-many --target=test:ci --all --parallel=1 --ci",
+    "test:ci:all": "cross-env CI=1 nx run-many --target=test:ci --all --parallel=1",
     "prepare": "husky",
     "copy-envs": "for d in user post; do cp -n $d/.env.sample $d/.env || true; done",
     "commit": "git-cz",

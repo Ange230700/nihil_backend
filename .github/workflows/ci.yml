@@ -70,8 +70,10 @@ jobs:
       - name: Generate Prisma schema
         run: npm run prisma:generate:all
 
-      - name: Deploy Prisma migrations
-        run: npm run prisma:migrate:deploy:all
+      - name: Reset DBs and apply migrations
+        run: |
+          node user/scripts/prisma.mjs migrate reset --force --skip-seed
+          node post/scripts/prisma.mjs migrate reset --force --skip-seed
 
       - name: Build all
         run: npm run build:all

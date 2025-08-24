@@ -21,7 +21,7 @@
     "typecheck": "tsc -b --noEmit --pretty false",
     "typecheck:user": "tsc -p user/tsconfig.json --noEmit --pretty false",
     "typecheck:post": "tsc -p post/tsconfig.json --noEmit --pretty false",
-    "prepush": "npm run test:all"
+    "prepush": "cross-env CI=1 NX_DAEMON=false npx nx reset && npm run test:ci:all"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",

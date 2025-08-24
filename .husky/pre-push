@@ -1,1 +1,5 @@
-npm run prepush
+echo "Running pre-push tests..."
+export CI=1
+export NX_DAEMON=false
+
+npm run test:ci:all || exit 1

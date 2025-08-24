@@ -67,6 +67,12 @@ jobs:
       - name: Install deps
         run: npm ci
 
+      - name: Generate Prisma schema
+        run: npm run prisma:generate:all
+
+      - name: Deploy Prisma migrations
+        run: npm run prisma:migrate:deploy:all
+
       - name: Build all
         run: npm run build:all
 

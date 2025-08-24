@@ -21,7 +21,11 @@
     "typecheck": "tsc -b --noEmit --pretty false",
     "typecheck:user": "tsc -p user/tsconfig.json --noEmit --pretty false",
     "typecheck:post": "tsc -p post/tsconfig.json --noEmit --pretty false",
-    "prepush": "cross-env CI=1 NX_DAEMON=false npx nx reset && npm run test:ci:all"
+    "prepush": "cross-env CI=1 NX_DAEMON=false npx nx reset && npm run test:ci:all",
+    "prisma:generate:all": "nx run-many --target=prisma:generate --all",
+    "prisma:migrate:deploy:all": "nx run-many --target=prisma:migrate:deploy --all",
+    "prisma:db:push:force:all": "nx run-many --target=prisma:db:push:force --all",
+    "postinstall": "npm run prisma:generate:all && npm run prisma:db:push:force:all"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",

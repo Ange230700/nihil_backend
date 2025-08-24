@@ -1,32 +1,28 @@
-// user\jest.config.mjs
+// post\jest.config.cjs
 
 /** @type {import('jest').Config} */
-export default {
-  // TS + ESM
+module.exports = {
   preset: "ts-jest/presets/default-esm",
   testEnvironment: "node",
 
   rootDir: ".",
   testMatch: ["**/*.spec.ts"],
-
-  // Tell Jest to treat .ts as ESM
   extensionsToTreatAsEsm: [".ts"],
 
-  // Use ts-jest to transpile TS (ESM output)
   transform: {
     "^.+\\.ts$": [
       "ts-jest",
       {
         useESM: true,
         tsconfig: "<rootDir>/tsconfig.jest.json",
+        diagnostics: false,
       },
     ],
   },
 
-  // Fix ESM ".js" extension rewrites in compiled output
   moduleNameMapper: {
     "^(\\.{1,2}/.*)\\.js$": "$1",
-    "^@nihil_backend/user/(.*)$": "<rootDir>/src/$1",
+    "^@nihil_backend/post/(.*)$": "<rootDir>/src/$1",
   },
 
   setupFilesAfterEnv: ["<rootDir>/jest.setup.cjs"],
@@ -37,6 +33,5 @@ export default {
 
   collectCoverageFrom: ["src/**/*.{ts,js}"],
   coverageDirectory: "./coverage",
-
   verbose: true,
 };

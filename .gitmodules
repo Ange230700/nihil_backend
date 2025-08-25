@@ -1,0 +1,8 @@
+[submodule "user"]
+	path = user
+	url = git@github.com:Ange230700/nihil_user_service.git
+	branch = main
+[submodule "post"]
+	path = post
+	url = git@github.com:Ange230700/nihil_post_service.git
+	branch = main

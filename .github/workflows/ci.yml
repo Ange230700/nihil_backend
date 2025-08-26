@@ -67,6 +67,20 @@ jobs:
           done
           echo "MySQL did not start" && exit 1
 
+      - uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: npm-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            npm-${{ runner.os }}-
+
+      - uses: actions/cache@v4
+        with:
+          path: .nx/cache
+          key: nx-${{ runner.os }}-${{ github.sha }}
+          restore-keys: |
+            nx-${{ runner.os }}-
+
       - name: Install deps
         run: npm ci
 
@@ -81,5 +95,11 @@ jobs:
       - name: Build all
         run: npm run build:all
 
-      - name: Test all
-        run: npm run test:ci:all
+      - name: Determine affected projects
+        run: npx nx print-affected --target=test --select=projects > affected.txt
+
+      - name: Test affected
+        run: |
+          AFFECTED=$(cat affected.txt)
+          if [ -z "$AFFECTED" ]; then echo "No affected projects."; exit 0; fi
+          npx nx run-many --target=test:ci --projects="$AFFECTED" --parallel=1

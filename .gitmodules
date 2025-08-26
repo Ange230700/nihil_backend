@@ -1,3 +1,5 @@
+# .gitmodules
+
 [submodule "user"]
 	path = user
 	url = git@github.com:Ange230700/nihil_user_service.git

@@ -4,6 +4,7 @@
     "addpost",
     "adduser",
     "anotheruser",
+    "APIV",
     "appgroup",
     "apppost",
     "appuser",
@@ -29,6 +30,7 @@
     "prisma",
     "profileuser",
     "testuser",
+    "treeify",
     "tsconfigs",
     "updateduser",
     "userprofile"

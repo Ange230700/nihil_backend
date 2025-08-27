@@ -9,7 +9,7 @@ on:
     branches: [main, develop]
 
 jobs:
-  build-test-lint:
+  build-test:
     runs-on: ubuntu-latest
     services:
       mysql-user:
@@ -95,38 +95,5 @@ jobs:
       - name: Build all
         run: npm run build:all
 
-      - name: Determine base/head for Nx
-        run: |
-          set -euxo pipefail
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            git fetch --no-tags --depth=1 origin "${{ github.base_ref }}"
-            echo "BASE=origin/${{ github.base_ref }}" >> "$GITHUB_ENV"
-            echo "HEAD=${{ github.sha }}" >> "$GITHUB_ENV"
-          else
-            # On push, compare current commit to its immediate parent on the same branch
-            echo "BASE=${{ github.sha }}~1" >> "$GITHUB_ENV"
-            echo "HEAD=${{ github.sha }}" >> "$GITHUB_ENV"
-          fi
-          echo "Using BASE=$(cat $GITHUB_ENV | grep ^BASE= | cut -d= -f2) HEAD=$(cat $GITHUB_ENV | grep ^HEAD= | cut -d= -f2)"
-
-      - name: Determine affected projects
-        run: |
-          set -euxo pipefail
-          npx nx print-affected \
-            --base="$BASE" --head="$HEAD" \
-            --target=test --configuration=ci \
-            --select=projects > affected.txt
-          echo "Affected projects:"
-          cat affected.txt || true
-
-      - name: Test affected
-        run: |
-          set -euxo pipefail
-          AFFECTED=$(cat affected.txt || true)
-          if [ -z "$AFFECTED" ]; then
-            echo "No affected projects. Skipping tests."
-            exit 0
-          fi
-          npx nx run-many \
-            --target=test --configuration=ci \
-            --projects="$AFFECTED" --parallel=1
+      - name: Test all
+        run: npm run test:all

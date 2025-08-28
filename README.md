@@ -1,9 +1,5 @@
 <!-- README.md -->
 
-Perfect — since now we’re at the **root of the monorepo** (with `user` and `post` as workspaces), here’s a polished **README.md** tailored to the setup you’ve shared:
-
----
-
 # Nihil Backend Monorepo
 
 A **backend monorepo** for the [Nihil platform](https://github.com/Ange230700), built with **Nx**, **TypeScript**, **Express**, and **Prisma**.

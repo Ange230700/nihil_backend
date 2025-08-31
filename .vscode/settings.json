@@ -20,6 +20,7 @@
     "dtos",
     "eslintcache",
     "euxo",
+    "fakerized",
     "github",
     "gitmodules",
     "johndoe",
@@ -39,6 +40,7 @@
     "tsconfigs",
     "updateduser",
     "uroot",
-    "userprofile"
+    "userprofile",
+    "uuid"
   ]
 }

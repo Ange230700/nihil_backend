@@ -1,4 +1,4 @@
-# .gitignore
+# nihil_backend\.gitignore
 
 node_modules
 .DS_Store

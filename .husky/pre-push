@@ -1,3 +1,5 @@
+# nihil_backend\.husky\pre-push
+
 echo "Running pre-push tests..."
 export CI=1
 export NX_DAEMON=false

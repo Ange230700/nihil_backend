@@ -1,4 +1,4 @@
-# .gitmodules
+# nihil_backend\.gitmodules
 
 [submodule "user"]
 	path = user
